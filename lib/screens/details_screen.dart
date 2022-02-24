@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas_app/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
 
@@ -16,7 +17,10 @@ final String movie = ModalRoute.of(context)?.settings.arguments.toString() ?? 'n
           const _CustomAppBar(),
           SliverList(
             delegate: SliverChildListDelegate([
-              _PosterAndTitle()
+              const _PosterAndTitle(),
+              const _Overview(),
+              const _Overview(),
+              CastingCards(),
             ])
           )
         ],
@@ -42,6 +46,7 @@ class _CustomAppBar extends StatelessWidget {
         title: Container(
           width: double.infinity,
           alignment: Alignment.bottomCenter,
+          padding: const EdgeInsets.only(bottom: 10),
           color: Colors.black12,
           child: const Text(
               'movie.title',
@@ -86,13 +91,28 @@ class _PosterAndTitle extends StatelessWidget {
               Row(
                 children: [
                   const Icon(Icons.star_outline, size: 15, color: Colors.grey),
-                  SizedBox(width: 5),
-                  Text('movie.voteAverage', style: textTheme.caption,)
+                  const SizedBox(width: 5),
+                  Text('movie.voteAverage', style: textTheme.caption)
                 ],
               )
             ],
           )
         ],
+      ),
+    );
+  }
+}
+
+class _Overview extends StatelessWidget {
+  const _Overview({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return  Container(
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+      child: Text('Sint anim esse amet tempor.Velit irure incididunt duis commodo qui qui mollit proident irure exercitation id. Laborum incididunt ipsum Lorem elit id magna quis do pariatur. Duis fugiat amet ut nisi quis ullamco cillum irure dolore nulla duis. Reprehenderit non aliquip pariatur deserunt ut laboris officia est fugiat ipsum. Duis ex consequat elit in anim cillum laborum anim ut ullamco nulla deserunt exercitation.',
+      textAlign: TextAlign.justify,
+      style: Theme.of(context).textTheme.subtitle1,
       ),
     );
   }
