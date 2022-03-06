@@ -34,7 +34,6 @@ class MovieSlider extends StatelessWidget {
               itemCount: 20,
               itemBuilder: (_, int index){
                 final movie = popularMovies[index];
-                print(movie);
                 return _MoviePoster(movie: movie);
               } 
             ),
