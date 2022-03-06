@@ -54,13 +54,14 @@ class MoviesProvider extends ChangeNotifier{
     }
 
   Future<List<Cast>>  getMovieCast(int movieId) async{
-      //Todo: revisar el map
-      print('getting cast obj');
+
+    if(moviesCast.containsKey(movieId)) return moviesCast[movieId]!; //Check if cast object exists in Map
+
       final jsonData = await _getJsonData('3/movie/$movieId/credits');
       final creditsResponse = CreditsResponse.fromJson(jsonData);
 
       moviesCast[movieId] = creditsResponse.cast;
-      
+
       return creditsResponse.cast;
     }
 }
