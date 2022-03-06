@@ -20,7 +20,7 @@ final Movie movie = ModalRoute.of(context)!.settings.arguments as Movie; //Lo tr
             delegate: SliverChildListDelegate([
               _PosterAndTitle(movie),
               _Overview(movie),
-              CastingCards(),
+              CastingCards(movie.id),
             ])
           )
         ],
