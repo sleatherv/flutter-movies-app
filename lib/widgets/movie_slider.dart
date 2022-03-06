@@ -1,16 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas_app/models/models.dart';
 
-class MovieSlider extends StatelessWidget {
+class MovieSlider extends StatefulWidget {
 
   final List<Movie> popularMovies;
   final String? title;
+  final Function onNextPage;
 
-  const MovieSlider({Key? key, required this.popularMovies, this.title}) : super(key: key);
+  const MovieSlider({Key? key, required this.popularMovies, this.title, required this.onNextPage}) : super(key: key);
 
   @override
+  State<MovieSlider> createState() => _MovieSliderState();
+}
+
+class _MovieSliderState extends State<MovieSlider> {
+  
+  final ScrollController scrollController = new ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      if(scrollController.position.pixels>= scrollController.position.maxScrollExtent - 500){
+        widget.onNextPage();
+      }
+    });
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
-     if(popularMovies.isEmpty ){
+    if(widget.popularMovies.isEmpty ){
     return const SizedBox(
         width: double.infinity,
         height: 190,
@@ -23,17 +46,18 @@ class MovieSlider extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if(title != null) Padding(
+          if(widget.title != null) Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Text(title!, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+          child: Text(widget.title!, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
           ),
           const SizedBox(height: 5),
           Expanded(
             child: ListView.builder(
+              controller: scrollController,
               scrollDirection: Axis.horizontal,
-              itemCount: 20,
+              itemCount: widget.popularMovies.length,
               itemBuilder: (_, int index){
-                final movie = popularMovies[index];
+                final movie = widget.popularMovies[index];
                 return _MoviePoster(movie: movie);
               } 
             ),
