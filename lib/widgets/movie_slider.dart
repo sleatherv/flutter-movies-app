@@ -81,7 +81,7 @@ class _MoviePoster extends StatelessWidget {
                   child: Column(
                     children: [
                       GestureDetector(
-                        onTap: () => Navigator.pushNamed(context, 'details', arguments: 'movie-details'),
+                        onTap: () => Navigator.pushNamed(context, 'details', arguments: movie),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
                           child: FadeInImage(
@@ -93,8 +93,8 @@ class _MoviePoster extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 5),
-                      const Text(
-                        'Startwars: El retorno el jedi y sus amigos extraterrestes',
+                      Text(
+                        movie.title,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         textAlign: TextAlign.center,
