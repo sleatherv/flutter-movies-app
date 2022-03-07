@@ -9,13 +9,18 @@ class MovieSearchDelegate extends SearchDelegate{
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
-      const Text('buildActions')
+      IconButton(onPressed: () => query = '', icon: const Icon(Icons.clear))
     ];
   }
 
   @override
   Widget? buildLeading(BuildContext context) {
-      return const Text('buildLeading');
+      return IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: (){
+          close(context, null);
+        }
+      );
   }
 
   @override
@@ -25,7 +30,12 @@ class MovieSearchDelegate extends SearchDelegate{
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Text('buildSuggestions: $query');
+    if(query.isEmpty){
+      return const Center(
+        child: Icon(Icons.movie_creation_outlined, color: Colors.black38, size: 100),
+      );
+    }
+    return Container();
   }
 
 }
