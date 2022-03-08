@@ -58,7 +58,7 @@ class _MovieSliderState extends State<MovieSlider> {
               itemCount: widget.popularMovies.length,
               itemBuilder: (_, int index){
                 final movie = widget.popularMovies[index];
-                return _MoviePoster(movie: movie);
+                return _MoviePoster(movie: movie, heroId: '${widget.title}-$index-${movie.id}');
               } 
             ),
           )
@@ -70,25 +70,30 @@ class _MovieSliderState extends State<MovieSlider> {
 
 class _MoviePoster extends StatelessWidget {
   final Movie movie;
-  const _MoviePoster({ Key? key, required this.movie }) : super(key: key);
+  final String heroId;
+
+  const _MoviePoster({ Key? key, required this.movie, required this.heroId }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    movie.heroId = heroId;
     return Container(
                   width: 130,
                   height: 190,
-                  
                   margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: Column(
                     children: [
                       GestureDetector(
                         onTap: () => Navigator.pushNamed(context, 'details', arguments: movie),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: FadeInImage(
-                            placeholder: const AssetImage('assets/img/no-image.jpg'),
-                            image: NetworkImage(movie.fullPosterImg),
-                            fit: BoxFit.fill,
-                            height: 170,
+                        child: Hero(
+                          tag: movie.heroId!,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: FadeInImage(
+                              placeholder: const AssetImage('assets/img/no-image.jpg'),
+                              image: NetworkImage(movie.fullPosterImg),
+                              fit: BoxFit.fill,
+                              height: 170,
+                            ),
                           ),
                         ),
                       ),

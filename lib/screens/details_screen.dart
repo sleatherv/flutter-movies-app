@@ -10,11 +10,11 @@ class DetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
 //Todo: Cambiar louego por una instancia de Movie
-final Movie movie = ModalRoute.of(context)!.settings.arguments as Movie; //Lo trata como si fuese una Movie
+final Movie movie = ModalRoute.of(context)!.settings.arguments as Movie; //like a movie
 
     return Scaffold(
       body: CustomScrollView(
-        slivers: [ //Son widgets con cierto comportamiento pre-programado al momento del scroll del padre
+        slivers: [ //widgets with certain pre-programmed behavior at parent scroll time
           _CustomAppBar(movie),
           SliverList(
             delegate: SliverChildListDelegate([
@@ -79,12 +79,15 @@ class _PosterAndTitle extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: FadeInImage(
-              placeholder: const AssetImage('assets/img/no-image.jpg'),
-              image: NetworkImage(movie.fullPosterImg),
-              height: 150,
+          Hero(
+            tag: movie.heroId!,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: FadeInImage(
+                placeholder: const AssetImage('assets/img/no-image.jpg'),
+                image: NetworkImage(movie.fullPosterImg),
+                height: 150,
+              ),
             ),
           ),
           const SizedBox(width: 20),
@@ -93,7 +96,6 @@ class _PosterAndTitle extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                
                 Text(movie.title, style: textTheme.headline5, overflow: TextOverflow.ellipsis, maxLines: 2),
                 Text(movie.originalTitle, style: textTheme.subtitle1, overflow: TextOverflow.ellipsis, maxLines: 2,),
                 Row(
